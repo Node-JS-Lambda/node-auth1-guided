@@ -1,8 +1,7 @@
 const path = require('path')
 const express = require('express')
 const session = require('express-session');
-const KnexSessionStore = require('connect-session-knex');
-KnexSessionStore(session);
+const KnexSessionStore = require('connect-session-knex')(session);
 
 const usersRouter = require('./users/users-router.js')
 
