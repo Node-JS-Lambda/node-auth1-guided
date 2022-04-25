@@ -18,7 +18,7 @@ const handle = action => evt => {
     username: usernameInput.value,
     password: passwordInput.value,
   }
-  fetch(`/api/auth/${action}`, {
+  fetch(`/api/users/${action}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
@@ -32,7 +32,7 @@ const logout = evt => {
   evt.preventDefault()
   message.textContent = ''
   userListDOM.textContent = ''
-  fetch(`/api/auth/logout`)
+  fetch(`/api/users/logout`)
     .then(res => res.json())
     .then(data => { console.log(data); message.textContent = data.message })
     .catch(err => { message.textContent = err.message; debugger })
