@@ -24,7 +24,10 @@ router.post('/login',validatePayload, async (req, res, next) => {
         const isCorrectPassword = bcrypt.compareSync(password, user.password)
 
         if (user && isCorrectPassword) {
-            console.log(user)
+            req.session.user = user 
+            //1. a cookie will be set on the response
+            //2. The session will be stored with a sessionID matching that of the cookie
+            res.json({ message: `Welcome, ${username}, have a cookie`})
         } else {
             next({ status: 401,message: 'Bad credentials' })
         }
@@ -36,7 +39,17 @@ router.post('/login',validatePayload, async (req, res, next) => {
 
 
 router.get('/logout', async (req, res, next) => {
-    res.json('Logout Wired!')
+    if (req.session.user) {
+        req.session.destroy(err => {
+            if(err){
+                res.json({ message: 'Sorry, you cannot leave!'})
+            }else{
+                res.json({ message: 'Bye!' })
+            }
+        })
+    }else{
+        res.json({ message: ' But I dont know you!'})
+    }
 })
 
 
