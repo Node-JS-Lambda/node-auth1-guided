@@ -17,7 +17,7 @@ router.post('/register',validatePayload, async (req, res, next) => {
 })
 
 
-router.post('/login', async (req, res, next) => {
+router.post('/login',validatePayload, async (req, res, next) => {
     try {
         const { username, password} = req.body
         const [ user ] = await findBy({username})
